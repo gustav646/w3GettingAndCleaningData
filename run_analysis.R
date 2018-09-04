@@ -63,6 +63,6 @@ cleanData <- function(labels, features, subjectTest, xTest, yTest, subjectTrain,
   
   filter_data2   = dcast(filter_data, subjectID + activity_name ~ variable, mean)
   
-  write.table(filter_data2, file = "./tidy_data.txt")
+  write.table(filter_data, file = "./tidy_data.txt")
   
 }
