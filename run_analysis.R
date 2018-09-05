@@ -55,14 +55,14 @@ cleanData <- function(labels, features, subjectTest, xTest, yTest, subjectTrain,
   names(data) <- gsub("Mag", "Magnitude", names(data))
   names(data) <- gsub("BodyBody", "Body", names(data))
 
+  #Convert to factors
+  data$subject <- as.factor(data$subject)
+  data$activity_name <- as.factor(data$activity_name)
+  
   #Calculate mean for each subject / activity pair
+  filterData <- aggregate(.~subject+activity_name, data, mean)
+  filterData <- arrange(filterData, subject, activity_name)
   
-  id_labels   = c("subjectID", "activity_ID", "activity_name")
-  data_labels = colnames(data)
-  filter_data = melt(data, id = id_labels, measure.vars = data_labels)
-  
-  filter_data2   = dcast(filter_data, subjectID + activity_name ~ variable, mean)
-  
-  write.table(filter_data, file = "./tidy_data.txt")
+  write.table(filterData, file = "./tidy_data.txt")
   
 }
